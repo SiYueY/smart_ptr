@@ -106,6 +106,7 @@ template<class T> std::size_t sp_hash_pointer( T* p ) noexcept
 
 class weak_count;
 
+/* shared_count 引用计数 */
 class shared_count
 {
 private:

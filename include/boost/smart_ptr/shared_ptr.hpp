@@ -243,11 +243,13 @@ struct sp_internal_constructor_tag
 
 
 //
-//  shared_ptr
+//  shared_ptr 
 //
 //  An enhanced relative of scoped_ptr with reference counted copy semantics.
+//  shared_ptr是scoped_ptr的增强版本，具有引用计数的拷贝语义。
 //  The object pointed to is deleted when the last shared_ptr pointing to it
 //  is destroyed or reset.
+//  当最后一个指向该对象的shared_ptr被销毁或重置时，该对象将被删除。
 //
 
 template<class T> class shared_ptr
@@ -259,20 +261,25 @@ private:
 
 public:
 
+    /* 存储指针的类型 */
     typedef typename boost::detail::sp_element< T >::type element_type;
 
+    /* 默认构造函数 */
     constexpr shared_ptr() noexcept : px( 0 ), pn()
     {
     }
 
+    /* 构造函数 */
     constexpr shared_ptr( std::nullptr_t ) noexcept : px( 0 ), pn()
     {
     }
 
+    /* 构造函数 */
     constexpr shared_ptr( boost::detail::sp_internal_constructor_tag, element_type * px_, boost::detail::shared_count const & pn_ ) noexcept : px( px_ ), pn( pn_ )
     {
     }
 
+    /* 构造函数 */
     constexpr shared_ptr( boost::detail::sp_internal_constructor_tag, element_type * px_, boost::detail::shared_count && pn_ ) noexcept : px( px_ ), pn( std::move( pn_ ) )
     {
     }
@@ -312,6 +319,7 @@ public:
 //  generated copy constructor, destructor are fine...
 // ... except in C++0x, move disables the implicit copy
 
+    /* 拷贝构造函数 */
     shared_ptr( shared_ptr const & r ) noexcept : px( r.px ), pn( r.pn )
     {
     }
@@ -641,8 +649,8 @@ private:
     template<class Y> friend class weak_ptr;
 
 
-    element_type * px;                 // contained pointer
-    boost::detail::shared_count pn;    // reference counter
+    element_type * px;                 // contained pointer 指针
+    boost::detail::shared_count pn;    // reference counter 引用计数
 
 };  // shared_ptr
 
